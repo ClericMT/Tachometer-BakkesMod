@@ -59,7 +59,7 @@ void Speedometer::Render(CanvasWrapper canvas)
 	const float sweep = (endRad + 2.0f * M_PI - startRad);
 
 	const int segments = 30;
-	float arcThickness = 6.0f;
+	float arcThickness = 12.0f;
 
 	// Thicker, semi-transparent background arc
 	canvas.SetColor(LinearColor{ 150, 150, 150, 100 });
