@@ -1,14 +1,14 @@
 #include "pch.h"
-#include "CoolPlugin.h"
+#include "Tachometer.h"
 
-void Speedometer::RenderSettings() {
-    ImGui::TextUnformatted("Speedometer");
+void Tachometer::RenderSettings() {
+    ImGui::TextUnformatted("Tachometer");
 
-    // Display text toggle
+    // Display Tachometer
     CVarWrapper enableCvar = cvarManager->getCvar("plugin_enabled");
     if (!enableCvar) { return; }
     bool enabled = enableCvar.getBoolValue();
-    if (ImGui::Checkbox("Enable Text", &enabled)) {
+    if (ImGui::Checkbox("Display Tachometer", &enabled)) {
         enableCvar.setValue(enabled);
     }
 

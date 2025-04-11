@@ -9,7 +9,7 @@
 constexpr auto plugin_version = stringify(VERSION_MAJOR) "." stringify(VERSION_MINOR) "." stringify(VERSION_PATCH) "." stringify(VERSION_BUILD);
 
 
-class Speedometer: public BakkesMod::Plugin::BakkesModPlugin
+class Tachometer: public BakkesMod::Plugin::BakkesModPlugin
 	,public SettingsWindowBase // Uncomment if you wanna render your own tab in the settings menu
 {
 
