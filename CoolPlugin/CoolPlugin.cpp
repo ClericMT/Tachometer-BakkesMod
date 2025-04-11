@@ -48,7 +48,6 @@ void Speedometer::Render(CanvasWrapper canvas)
 
 	Vector2 screenSize = canvas.GetSize();
 	Vector2F center = { 200.0f, screenSize.Y - 200.0f };
-
 	float radius = 100.0f;
 
 	// Arc sweep: Clockwise from 90° to -30°
@@ -58,26 +57,36 @@ void Speedometer::Render(CanvasWrapper canvas)
 	const float endRad = endDeg * (M_PI / 180.0f);
 	const float sweep = (endRad + 2.0f * M_PI - startRad);
 
-	const int segments = 30;
-	float arcThickness = 12.0f;
+	const int segments = 60;
+	const float arcThickness = 12.0f;
+	const float gapRatio = 0.2f;
 
-	// Thicker, semi-transparent background arc
-	canvas.SetColor(LinearColor{ 150, 150, 150, 100 });
+	float supersonicThreshold = 79.0f;
+	float supersonicStartT = std::clamp(supersonicThreshold / maxSpeed, 0.0f, 1.0f);
+
+	// Combined loop for both gray and red segments
 	for (int i = 0; i < segments; ++i)
 	{
 		float t0 = (float)i / segments;
 		float t1 = (float)(i + 1) / segments;
 
-		float a0 = startRad + sweep * t0;
-		float a1 = startRad + sweep * t1;
+		float segmentGap = (sweep * (t1 - t0)) * gapRatio;
+		float a0 = startRad + sweep * t0 + segmentGap;
+		float a1 = startRad + sweep * t1 - segmentGap;
 
 		if (a0 >= 2.0f * M_PI) a0 -= 2.0f * M_PI;
 		if (a1 >= 2.0f * M_PI) a1 -= 2.0f * M_PI;
 
-		float arcRadius = radius + 12.0f; // arc extends outward from needle/tick radius
-
+		float arcRadius = radius + 12.0f;
 		Vector2F p0 = { center.X + cosf(a0) * arcRadius, center.Y + sinf(a0) * arcRadius };
 		Vector2F p1 = { center.X + cosf(a1) * arcRadius, center.Y + sinf(a1) * arcRadius };
+
+		// Red if segment is in supersonic region, else gray
+		float midT = (t0 + t1) / 2.0f;
+		if (midT >= supersonicStartT)
+			canvas.SetColor(LinearColor{ 255, 0, 0, 255 });
+		else
+			canvas.SetColor(LinearColor{ 150, 150, 150, 100 });
 
 		canvas.DrawLine(p0, p1, arcThickness);
 	}
@@ -96,10 +105,8 @@ void Speedometer::Render(CanvasWrapper canvas)
 		canvas.DrawLine(p1, p2, 2.5f);
 	}
 
-	// --- Triangle Needle ---
-	// Stylized filled triangle needle (light gray)
+	// Needle
 	LinearColor needleColor = LinearColor{ 200, 200, 200, 255 };
-
 	float needleLength = radius - 30.0f;
 	float baseInset = 15.0f;
 	float needleWidth = 10.0f;
@@ -130,35 +137,7 @@ void Speedometer::Render(CanvasWrapper canvas)
 
 	canvas.FillTriangle(baseLeft, baseRight, tip, needleColor);
 
-
-	// --- Supersonic Red Arc ---
-	canvas.SetColor(LinearColor{ 255, 0, 0, 255 });
-
-	float supersonicThreshold = 79.0f;
-	float supersonicStartT = std::clamp(supersonicThreshold / maxSpeed, 0.0f, 1.0f);
-
-	int redSegments = 10;
-	for (int i = 0; i < redSegments; ++i)
-	{
-		float t0 = supersonicStartT + (1.0f - supersonicStartT) * (float)i / redSegments;
-		float t1 = supersonicStartT + (1.0f - supersonicStartT) * (float)(i + 1) / redSegments;
-
-		float a0 = startRad + sweep * t0;
-		float a1 = startRad + sweep * t1;
-
-		if (a0 >= 2.0f * M_PI) a0 -= 2.0f * M_PI;
-		if (a1 >= 2.0f * M_PI) a1 -= 2.0f * M_PI;
-
-		float arcRadius = radius + 12.0f; // arc extends outward from needle/tick radius
-
-		Vector2F p0 = { center.X + cosf(a0) * arcRadius, center.Y + sinf(a0) * arcRadius };
-		Vector2F p1 = { center.X + cosf(a1) * arcRadius, center.Y + sinf(a1) * arcRadius };
-
-
-		canvas.DrawLine(p0, p1, 4.0f);
-	}
-
-	// --- Digital Speed Display ---
+	// Digital Speed Text
 	canvas.SetColor(LinearColor{ 255, 255, 255, 255 });
 
 	float textOffsetX = 40.0f;
@@ -171,6 +150,7 @@ void Speedometer::Render(CanvasWrapper canvas)
 	canvas.SetPosition(Vector2F{ center.X + textOffsetX + 5.0f, center.Y + textOffsetY + 10.0f });
 	canvas.DrawString("KM/H", 1.8f, 1.8f, false, false);
 }
+
 
 
 
