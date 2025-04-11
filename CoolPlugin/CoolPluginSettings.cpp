@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "CoolPlugin.h"
 
-void CoolPlugin::RenderSettings() {
-    ImGui::TextUnformatted("ClericMT World");
+void Speedometer::RenderSettings() {
+    ImGui::TextUnformatted("Speedometer");
 
     // Display text toggle
     CVarWrapper enableCvar = cvarManager->getCvar("plugin_enabled");

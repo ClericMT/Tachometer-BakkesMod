@@ -1,3 +1,5 @@
+
+/*
 #include "pch.h"
 #include "CoolPlugin.h"
 #include "bakkesmod/wrappers/includes.h"
@@ -27,11 +29,11 @@ void Speedometer::onLoad()
 		pluginEnabled = cvar.getBoolValue();
 			});
 
-	
+
 
 	gameWrapper->RegisterDrawable(std::bind(&Speedometer::Render, this, std::placeholders::_1));
 
-	
+
 }
 
 
@@ -58,7 +60,7 @@ void Speedometer::Render(CanvasWrapper canvas)
 	const float endRad = endDeg * (M_PI / 180.0f);
 	const float sweep = (endRad + 2.0f * M_PI - startRad);
 
-	const int segments = 30;
+	const int segments = 60;
 	float arcThickness = 6.0f;
 
 	// Thicker, semi-transparent background arc
@@ -171,7 +173,7 @@ void Speedometer::Render(CanvasWrapper canvas)
 	canvas.SetPosition(Vector2F{ center.X + textOffsetX + 5.0f, center.Y + textOffsetY + 10.0f });
 	canvas.DrawString("KM/H", 1.8f, 1.8f, false, false);
 }
-
+*/
 
 
 
