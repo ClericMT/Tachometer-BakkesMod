@@ -11,7 +11,6 @@ A clean, minimal speedometer HUD plugin for Rocket League using BakkesMod. Displ
 
 ## Preview
 
-![image](https://github.com/user-attachments/assets/cd2e10c8-5300-4de4-9ff4-6eae3fb6d629)
-
+![Capture](https://github.com/user-attachments/assets/2761e67b-bb4c-457c-a70b-f34a50f3df04)
 
 
