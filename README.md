@@ -1,10 +1,10 @@
-# Speedometer Plugin for BakkesMod
+# Tachometer Plugin for BakkesMod
 
-A clean, minimal speedometer HUD plugin for Rocket League using BakkesMod. Displays your current car speed as a radial gauge during freeplay, replays, and post-goal sequences.
+A clean, minimal tachometer HUD plugin for Rocket League using BakkesMod. Displays your current car speed as a radial gauge during freeplay, replays, and post-goal sequences.
 
 ## Features
 
-- 📈 Real-time speedometer gauge in KM/H
+- 📈 Real-time tachometer (speedometer) gauge in KM/H
 - 🎯 Supersonic speed threshold highlighting
 - 🎮 Compatible with Freeplay, Replays, Goal Replays
 - ⚙️ Configurable activation via CVar `plugin_enabled`
